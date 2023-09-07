@@ -33,12 +33,10 @@ public class JwtGeneratorService {
 
 	public Map<String, String> gerarToken(UsuarioDTO usuario) {
 		String jwtToken = "";
-		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuarioService.dtoToUsuario(
-				usuario)).getNome()).setIssuedAt(new Date())
+		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuario).getNome()).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(SignatureAlgorithm.HS512, "usuarioLogado").claim("id", usuario.getId())
-				.claim("tipo", usuario.getTipoUsuario().getValor()).claim("login", usuario.getLogin())
-				.compact();
+				.claim("tipo", usuario.getTipoUsuario().getValor()).claim("login", usuario.getLogin()).compact();
 		Map<String, String> token = new HashMap<>();
 		token.put("tipoUsuario", usuario.getTipoUsuario().getDescricao());
 		token.put("token", jwtToken);

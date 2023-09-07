@@ -1,6 +1,7 @@
 package com.atl.commerce.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public Usuario novoUsuario(Usuario user) {
-		return usuarioRepository.save(user);
+	public UsuarioDTO novoUsuario(Usuario user) {
+		return usuarioToDto(usuarioRepository.save(user));
 	}
 
 	public UsuarioDTO getUsuarioByLoginAndSenha(String login, String senha) throws RuntimeException {
@@ -25,20 +26,29 @@ public class UsuarioService {
 		return usuario != null ? usuarioToDto(usuario) : null;
 	}
 
-	public List<Usuario> obterTodos() {
-		return usuarioRepository.findAll();
+	public List<UsuarioDTO> obterTodos() {
+		return usuarioRepository.findAll().stream().map(this::usuarioToDto).collect(Collectors.toList());
 	}
 
-	public Usuario obterPorId(int id) {
-		return usuarioRepository.findById(id).get();
+	public UsuarioDTO obterPorId(int id) {
+		return usuarioToDto(usuarioRepository.findById(id).get());
+	}
+	
+	public UsuarioDTO atualizar (UsuarioDTO dto) {
+		return usuarioToDto(usuarioRepository.save(dtoToUsuario(dto)));
+	}
+	
+	public int deletarPorID (int id) {
+		usuarioRepository.deleteById(id);
+		return id;
 	}
 
-	public Usuario novoUsuarioCliente(UsuarioDTO dto) {
+	public UsuarioDTO novoUsuarioCliente(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.CLIENTE);
 		return novoUsuario(dtoToUsuario(dto));
 	}
 
-	public Usuario novoUsuarioAdmin(UsuarioDTO dto) {
+	public UsuarioDTO novoUsuarioAdmin(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.ADMIN);
 		return novoUsuario(dtoToUsuario(dto));
 	}
