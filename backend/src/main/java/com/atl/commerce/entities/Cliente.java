@@ -22,15 +22,19 @@ public class Cliente {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	public String getNome() {
-		return nome;
-	}
-
 	public Cliente(String nome, String email, Usuario usuario) {
 		super();
 		this.nome = nome;
 		this.email = email;
 		this.usuario = usuario;
+	}
+
+	public Cliente() {
+		super();
+	}
+
+	public String getNome() {
+		return nome;
 	}
 
 	public void setNome(final String nome) {
