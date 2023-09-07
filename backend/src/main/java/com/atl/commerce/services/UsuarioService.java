@@ -21,11 +21,8 @@ public class UsuarioService {
 	}
 
 	public UsuarioDTO getUsuarioByLoginAndSenha(String login, String senha) throws RuntimeException {
-		UsuarioDTO usuario = usuarioToDto(usuarioRepository.findByLoginAndSenha(login, senha));
-		if (usuario == null) {
-			throw new RuntimeException("Usuário e Senha Inválidos.");
-		}
-		return usuario;
+		Usuario usuario = usuarioRepository.findByLoginAndSenha(login, senha);
+		return usuario != null ? usuarioToDto(usuario) : null;
 	}
 
 	public List<Usuario> obterTodos() {
@@ -38,12 +35,12 @@ public class UsuarioService {
 
 	public void novoUsuarioCliente(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.CLIENTE);
-		novoUsuario(dtoTousuario(dto));
+		novoUsuario(dtoToUsuario(dto));
 	}
 
 	public void novoUsuarioAdmin(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.ADMIN);
-		novoUsuario(dtoTousuario(dto));
+		novoUsuario(dtoToUsuario(dto));
 	}
 
 	public UsuarioDTO usuarioToDto(final Usuario usuario) {
@@ -55,7 +52,7 @@ public class UsuarioService {
 		return dto;
 	}
 
-	public Usuario dtoTousuario(final UsuarioDTO dto) {
+	public Usuario dtoToUsuario(final UsuarioDTO dto) {
 		final Usuario usuario = new Usuario();
 		usuario.setId(dto.getId());
 		usuario.setLogin(dto.getLogin());

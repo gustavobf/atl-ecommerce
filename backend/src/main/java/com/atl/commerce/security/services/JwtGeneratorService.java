@@ -33,7 +33,7 @@ public class JwtGeneratorService {
 
 	public Map<String, String> gerarToken(UsuarioDTO usuario) {
 		String jwtToken = "";
-		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuarioService.dtoTousuario(
+		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuarioService.dtoToUsuario(
 				usuario)).getNome()).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
 				.signWith(SignatureAlgorithm.HS512, "usuarioLogado").claim("id", usuario.getId())

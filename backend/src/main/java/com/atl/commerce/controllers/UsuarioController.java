@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atl.commerce.dtos.LoginDTO;
 import com.atl.commerce.dtos.UsuarioDTO;
-import com.atl.commerce.entities.Usuario;
 import com.atl.commerce.security.services.JwtGeneratorService;
 import com.atl.commerce.services.UsuarioService;
 
@@ -34,12 +34,12 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+	public ResponseEntity<?> login(@RequestBody LoginDTO login) {
 		try {
-			if (usuario.getLogin() == null || usuario.getSenha() == null) {
+			if (login.getLogin() == null || login.getSenha() == null) {
 				throw new RuntimeException("Usuário ou Senha estão vazios.");
 			}
-			UsuarioDTO usuarioLogado = usuarioService.getUsuarioByLoginAndSenha(usuario.getLogin(), usuario.getSenha());
+			UsuarioDTO usuarioLogado = usuarioService.getUsuarioByLoginAndSenha(login.getLogin(), login.getSenha());
 			if (usuarioLogado == null) {
 				throw new RuntimeException("Usuário ou Senha Inválidos.");
 			}
