@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atl.commerce.dtos.UsuarioDTO;
 import com.atl.commerce.entities.Usuario;
-import com.atl.commerce.security.config.JwtGeneratorInterface;
+import com.atl.commerce.security.services.JwtGeneratorService;
 import com.atl.commerce.services.UsuarioService;
 
 @RestController
@@ -21,7 +21,7 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 
 	@Autowired
-	private JwtGeneratorInterface jwtGenerator;
+	private JwtGeneratorService jwtService;
 
 	@PostMapping("/novo")
 	public ResponseEntity<?> novoUsuario(@RequestBody UsuarioDTO dto) {
@@ -43,7 +43,7 @@ public class UsuarioController {
 			if (usuarioLogado == null) {
 				throw new RuntimeException("Usuário ou Senha Inválidos.");
 			}
-			return new ResponseEntity<>(jwtGenerator.gerarToken(usuarioLogado), HttpStatus.OK);
+			return new ResponseEntity<>(jwtService.gerarToken(usuarioLogado), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 		}

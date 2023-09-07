@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atl.commerce.dtos.ProdutoDTO;
-import com.atl.commerce.security.service.JwtGeneratorImpl;
+import com.atl.commerce.security.services.JwtGeneratorService;
 import com.atl.commerce.services.ProdutoService;
 
 import io.jsonwebtoken.Claims;
@@ -27,7 +27,7 @@ public class ProdutoController {
 	private ProdutoService service;
 
 	@Autowired
-	JwtGeneratorImpl jwt;
+	JwtGeneratorService jwt;
 
 	@PostMapping
 	public ResponseEntity<?> novo(@RequestBody ProdutoDTO dto, HttpServletRequest request) {

@@ -1,4 +1,4 @@
-package com.atl.commerce.security.config;
+package com.atl.commerce.security.filter;
 
 import java.io.IOException;
 
@@ -20,11 +20,23 @@ public class JwtFilter extends GenericFilterBean {
 			throws IOException, ServletException {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-		final String authHeader = request.getHeader("authorization");
-		if (authHeader != null && authHeader.startsWith("Bearer ")) {
+
+		if (!"OPTIONS".equals(request.getMethod())) {
+
+			String authHeader = request.getHeader("Authorization");
+			if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Autorização necessária.");
+				return ;
+			}
+
 			final String token = authHeader.substring(7);
-			Claims claims = Jwts.parser().setSigningKey("usuarioLogado").parseClaimsJws(token).getBody();
-			request.setAttribute("claims", claims);
+			try {
+				Claims claims = Jwts.parser().setSigningKey("usuarioLogado").parseClaimsJws(token).getBody();
+				request.setAttribute("claims", claims);
+			} catch (Exception e) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Inválido.");
+				return ;
+			}
 			filterChain.doFilter(request, response);
 		}
 

@@ -1,4 +1,4 @@
-package com.atl.commerce.security.service;
+package com.atl.commerce.security.services;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +12,6 @@ import com.atl.commerce.dtos.UsuarioDTO;
 import com.atl.commerce.entities.Cliente;
 import com.atl.commerce.entities.Usuario;
 import com.atl.commerce.enums.TipoUsuario;
-import com.atl.commerce.security.config.JwtGeneratorInterface;
 import com.atl.commerce.services.ClienteService;
 import com.atl.commerce.services.UsuarioService;
 
@@ -22,7 +21,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
-public class JwtGeneratorImpl implements JwtGeneratorInterface {
+public class JwtGeneratorService {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
@@ -32,7 +31,6 @@ public class JwtGeneratorImpl implements JwtGeneratorInterface {
 	@Autowired
 	UsuarioService usuarioService;
 
-	@Override
 	public Map<String, String> gerarToken(UsuarioDTO usuario) {
 		String jwtToken = "";
 		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuarioService.dtoTousuario(
