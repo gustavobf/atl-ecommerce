@@ -39,8 +39,8 @@ INSERT INTO CATEGORIA(nome) VALUES ('Fruits'),
                                   ('Sweets'),
                                   ('Other');
                                   
-INSERT INTO CLIENTE(nome) VALUES ('nome cliente');
                      
 INSERT INTO PRODUTO(descricao, imagem, nome, preco, categoria_id) VALUES ('Fresh and juicy', 'http://lorempixel.com.br/500/400/?1', 'Apple', 40, 1);
 
-INSERT INTO USUARIO(login, senha, tipo_usuario) values ('Alice', 'pass123', 1);
+INSERT INTO USUARIO(login, senha, tipo_usuario) values ('cliente', 'admin', 0), ('admin', 'admin', 1);
+INSERT INTO CLIENTE(nome, usuario_id) VALUES ('nome admin', 2), ('nome cliente', 1);

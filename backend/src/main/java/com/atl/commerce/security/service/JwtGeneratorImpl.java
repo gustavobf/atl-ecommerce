@@ -5,26 +5,42 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.atl.commerce.dtos.UsuarioDTO;
+import com.atl.commerce.entities.Cliente;
 import com.atl.commerce.entities.Usuario;
+import com.atl.commerce.enums.TipoUsuario;
 import com.atl.commerce.security.config.JwtGeneratorInterface;
+import com.atl.commerce.services.ClienteService;
+import com.atl.commerce.services.UsuarioService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtGeneratorImpl implements JwtGeneratorInterface {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
+	@Autowired
+	ClienteService clienteService;
+
+	@Autowired
+	UsuarioService usuarioService;
+
 	@Override
-	public Map<String, String> gerarToken(Usuario usuario) {
+	public Map<String, String> gerarToken(UsuarioDTO usuario) {
 		String jwtToken = "";
-		jwtToken = Jwts.builder().setSubject(usuario.getLogin()).setIssuedAt(new Date())
+		jwtToken = Jwts.builder().setSubject(clienteService.obterByUsuario(usuarioService.dtoTousuario(
+				usuario)).getNome()).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-				.signWith(SignatureAlgorithm.HS512, "usuarioLogado").claim("idUsuario", usuario.getId()).compact();
+				.signWith(SignatureAlgorithm.HS512, "usuarioLogado").claim("id", usuario.getId())
+				.claim("tipo", usuario.getTipoUsuario().getValor()).claim("login", usuario.getLogin())
+				.compact();
 		Map<String, String> token = new HashMap<>();
 		token.put("tipoUsuario", usuario.getTipoUsuario().getDescricao());
 		token.put("token", jwtToken);
@@ -57,6 +73,22 @@ public class JwtGeneratorImpl implements JwtGeneratorInterface {
 	public Boolean validarToken(String token, Usuario user) {
 		final String username = obterUsernameDoToken(token);
 		return (username.equals(user.getLogin()) && !tokenEstaExpirado(token));
+	}
+
+	public String obterTokenDaRequisicao(HttpServletRequest request) {
+		return request == null ? "" : request.getHeader("authorization").replace("Bearer ", "").trim();
+	}
+
+	public boolean isAdmin(String token) {
+		return TipoUsuario.ADMIN.equals(TipoUsuario.fromNumber((int) obterTodosOsClaims(token).get("tipo")));
+	}
+
+	public boolean isCliente(String token) {
+		return TipoUsuario.CLIENTE.equals(TipoUsuario.fromNumber((int) obterTodosOsClaims(token).get("tipo")));
+	}
+
+	public Cliente obterClientePorToken(String token) {
+		return clienteService.obterByUsuario(usuarioService.obterPorId((int) obterTodosOsClaims(token).get("id")));
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.atl.commerce.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +16,9 @@ import com.atl.commerce.dtos.ProdutoDTO;
 import com.atl.commerce.security.service.JwtGeneratorImpl;
 import com.atl.commerce.services.ProdutoService;
 
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value = "/api/produto")
 public class ProdutoController {
@@ -27,18 +30,26 @@ public class ProdutoController {
 	JwtGeneratorImpl jwt;
 
 	@PostMapping
-	public ProdutoDTO novo(@RequestBody ProdutoDTO dto) {
-		return service.novo(dto);
+	public ResponseEntity<?> novo(@RequestBody ProdutoDTO dto, HttpServletRequest request) {
+		return jwt.isAdmin(jwt.obterTokenDaRequisicao(request))
+				? new ResponseEntity<>(service.novo(dto), HttpStatus.CREATED)
+						: new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}
 
 	@GetMapping
-	public List<ProdutoDTO> obterTodos() {
-		return service.obterTodos();
+	public Claims obterTodos(HttpServletRequest request) {
+		return jwt.obterTodosOsClaims(jwt.obterTokenDaRequisicao(request));
 	}
+	//	@GetMapping
+	//	public List<ProdutoDTO> obterTodos() {
+	//		return service.obterTodos();
+	//	}
 
 	@PutMapping()
-	public ProdutoDTO atualizar(@RequestBody ProdutoDTO dto) {
-		return service.atualizar(dto);
+	public ResponseEntity<?> atualizar(@RequestBody ProdutoDTO dto, HttpServletRequest request) {
+		return jwt.isAdmin(jwt.obterTokenDaRequisicao(request))
+				? new ResponseEntity<>(service.atualizar(dto), HttpStatus.CREATED)
+						: new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}
 
 	@GetMapping("/{id}")
@@ -47,8 +58,10 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable int id) {
-		service.deletarPorId(id);
+	public ResponseEntity<?> deletar(@PathVariable int id, HttpServletRequest request) {
+		return jwt.isAdmin(jwt.obterTokenDaRequisicao(request))
+				? new ResponseEntity<>(service.deletarPorId(id), HttpStatus.NO_CONTENT)
+						: new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	}
 
 }

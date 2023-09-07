@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atl.commerce.dtos.UsuarioDTO;
 import com.atl.commerce.entities.Usuario;
 import com.atl.commerce.security.config.JwtGeneratorInterface;
 import com.atl.commerce.services.UsuarioService;
@@ -23,10 +24,10 @@ public class UsuarioController {
 	private JwtGeneratorInterface jwtGenerator;
 
 	@PostMapping("/novo")
-	public ResponseEntity<?> novoUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<?> novoUsuario(@RequestBody UsuarioDTO dto) {
 		try {
-			usuarioService.novoUsuarioCliente(usuario);
-			return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+			usuarioService.novoUsuarioCliente(dto);
+			return new ResponseEntity<>(dto, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 		}
@@ -38,7 +39,7 @@ public class UsuarioController {
 			if (usuario.getLogin() == null || usuario.getSenha() == null) {
 				throw new RuntimeException("Usuário ou Senha estão vazios.");
 			}
-			Usuario usuarioLogado = usuarioService.getUsuarioByLoginAndSenha(usuario.getLogin(), usuario.getSenha());
+			UsuarioDTO usuarioLogado = usuarioService.getUsuarioByLoginAndSenha(usuario.getLogin(), usuario.getSenha());
 			if (usuarioLogado == null) {
 				throw new RuntimeException("Usuário ou Senha Inválidos.");
 			}

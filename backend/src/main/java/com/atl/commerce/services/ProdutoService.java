@@ -55,8 +55,9 @@ public class ProdutoService {
 		}
 	}
 
-	public void deletarPorId(int id) {
+	public int deletarPorId(int id) {
 		repository.deleteById(id);
+		return id;
 	}
 
 	public ProdutoDTO novo(ProdutoDTO dto) {
