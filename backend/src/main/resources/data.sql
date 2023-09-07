@@ -45,24 +45,20 @@ CREATE TABLE IF NOT EXISTS ITEM_PEDIDO(
     FOREIGN KEY (pedido_id) REFERENCES PEDIDO(id)
 );
 
-INSERT INTO CATEGORIA(nome) VALUES ('Fruits'),
-                                  ('Vegetables'),
-                                  ('Meat'),
-                                  ('Fish'),
-                                  ('Dairy'),
-                                  ('Bakery'),
-                                  ('Drinks'),
-                                  ('Sweets'),
-                                  ('Other');
+INSERT INTO CATEGORIA(nome) VALUES
+('Cat1'), ('Cat2'), ('Cat3');
                                   
                      
-INSERT INTO PRODUTO(descricao, imagem, nome, preco, categoria_id) VALUES ('Fresh and juicy', 'http://lorempixel.com.br/500/400/?1', 'Apple', 40, 1);
+INSERT INTO PRODUTO(descricao, imagem, nome, preco, categoria_id) VALUES 
+('Bom1', 'http://lorempixel.com.br/500/400/?1', 'Name1', 40, 1), 
+('Bom2', 'http://lorempixel.com.br/500/400/?1', 'Name2', 50, 2),
+('Bom3', 'http://lorempixel.com.br/500/400/?1', 'Name3', 60, 3);
 
 
-INSERT INTO USUARIO(login, senha, tipo_usuario) values ('cliente', 'admin', 0), ('admin', 'admin', 1);
+INSERT INTO USUARIO(login, senha, tipo_usuario) VALUES 
+('cliente', 'admin', 0), 
+('admin', 'admin', 1);
 
-INSERT INTO CLIENTE(nome, usuario_id) VALUES ('nome admin', 2), ('nome cliente', 1);
-
-INSERT INTO PEDIDO(cliente_id) VALUES (1);
-
-INSERT INTO ITEM_PEDIDO(preco_total, quantidade, produto_id, pedido_id) VALUES (1000, 50, 1, 1);
+INSERT INTO CLIENTE(nome, usuario_id) VALUES 
+('nome admin', 2), 
+('nome cliente', 1);

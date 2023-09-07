@@ -23,10 +23,16 @@ public class JwtFilter extends GenericFilterBean {
 
 		if (!"OPTIONS".equals(request.getMethod())) {
 
+			String path = request.getRequestURI();
+			if (path.equals("/api/usuario/login") || path.startsWith("/h2-console") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")) {
+				filterChain.doFilter(request, response);
+				return;
+			}
+
 			String authHeader = request.getHeader("Authorization");
 			if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Autorização necessária.");
-				return ;
+				return;
 			}
 
 			final String token = authHeader.substring(7);
@@ -35,7 +41,7 @@ public class JwtFilter extends GenericFilterBean {
 				request.setAttribute("claims", claims);
 			} catch (Exception e) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Inválido.");
-				return ;
+				return;
 			}
 			filterChain.doFilter(request, response);
 		}

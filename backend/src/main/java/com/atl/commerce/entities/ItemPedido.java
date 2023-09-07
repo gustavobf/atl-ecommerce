@@ -20,7 +20,11 @@ public class ItemPedido {
 
 	@ManyToOne
 	@JoinColumn(name = "produto_id")
-	private Produto produtoId;
+	private Produto produto;
+
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
+	private Pedido pedido;
 
 	public int getId() {
 		return id;
@@ -46,11 +50,29 @@ public class ItemPedido {
 		this.quantidade = quantidade;
 	}
 
-	public Produto getProdutoId() {
-		return produtoId;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setProdutoId(Produto produtoId) {
-		this.produtoId = produtoId;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public static ItemPedido novo(Pedido pedido, int quantidade, Produto produto) {
+		ItemPedido itemPedido = new ItemPedido();
+		itemPedido.setPedido(pedido);
+		itemPedido.setQuantidade(quantidade);
+		itemPedido.setProduto(produto);
+		itemPedido.setPrecoTotal(itemPedido.getQuantidade() * itemPedido.getProduto().getPreco());
+		return itemPedido;
+	}
+
 }

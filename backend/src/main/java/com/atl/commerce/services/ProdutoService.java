@@ -24,7 +24,7 @@ public class ProdutoService {
 		return repository.findAll().stream().map(this::produtoToDTO).collect(Collectors.toList());
 	}
 
-	private ProdutoDTO produtoToDTO(final Produto produto) {
+	public ProdutoDTO produtoToDTO(final Produto produto) {
 		final ProdutoDTO dto = new ProdutoDTO();
 		dto.setId(produto.getId());
 		dto.setNome(produto.getNome());
@@ -35,7 +35,7 @@ public class ProdutoService {
 		return dto;
 	}
 
-	private Produto dtoToProduto(final ProdutoDTO dto) {
+	public Produto dtoToProduto(final ProdutoDTO dto) {
 		final Produto produto = new Produto();
 		produto.setId(dto.getId());
 		produto.setNome(dto.getNome());
