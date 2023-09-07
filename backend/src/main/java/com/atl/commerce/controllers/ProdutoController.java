@@ -1,5 +1,7 @@
 package com.atl.commerce.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,6 @@ import com.atl.commerce.dtos.ProdutoDTO;
 import com.atl.commerce.security.services.JwtGeneratorService;
 import com.atl.commerce.services.ProdutoService;
 
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -37,13 +38,9 @@ public class ProdutoController {
 	}
 
 	@GetMapping
-	public Claims obterTodos(HttpServletRequest request) {
-		return jwt.obterTodosOsClaims(jwt.obterTokenDaRequisicao(request));
+	public List<ProdutoDTO> obterTodos() {
+		return service.obterTodos();
 	}
-	//	@GetMapping
-	//	public List<ProdutoDTO> obterTodos() {
-	//		return service.obterTodos();
-	//	}
 
 	@PutMapping()
 	public ResponseEntity<?> atualizar(@RequestBody ProdutoDTO dto, HttpServletRequest request) {

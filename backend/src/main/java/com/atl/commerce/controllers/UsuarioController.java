@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.atl.commerce.dtos.ClienteDTO;
 import com.atl.commerce.dtos.LoginDTO;
 import com.atl.commerce.dtos.UsuarioDTO;
+import com.atl.commerce.entities.Cliente;
+import com.atl.commerce.entities.Usuario;
 import com.atl.commerce.security.services.JwtGeneratorService;
+import com.atl.commerce.services.ClienteService;
 import com.atl.commerce.services.UsuarioService;
 
 @RestController
@@ -21,13 +25,18 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 
 	@Autowired
+	private ClienteService clienteService;
+
+	@Autowired
 	private JwtGeneratorService jwtService;
 
 	@PostMapping("/novo")
-	public ResponseEntity<?> novoUsuario(@RequestBody UsuarioDTO dto) {
+	public ResponseEntity<?> novoUsuario(@RequestBody ClienteDTO dto) {
 		try {
-			usuarioService.novoUsuarioCliente(dto);
-			return new ResponseEntity<>(dto, HttpStatus.CREATED);
+			Usuario novoUsuario = usuarioService.novoUsuarioCliente(new UsuarioDTO(dto.getUsuario().getLogin(),dto.getUsuario().getSenha(), dto.getUsuario().getTipoUsuario()));
+			Cliente clienteNovo = clienteService.novoCliente(
+					new Cliente(dto.getNome(), dto.getEmail(), novoUsuario));
+			return new ResponseEntity<>(clienteNovo, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 		}

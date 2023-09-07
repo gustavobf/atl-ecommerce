@@ -26,6 +26,13 @@ public class Cliente {
 		return nome;
 	}
 
+	public Cliente(String nome, String email, Usuario usuario) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.usuario = usuario;
+	}
+
 	public void setNome(final String nome) {
 		this.nome = nome;
 	}

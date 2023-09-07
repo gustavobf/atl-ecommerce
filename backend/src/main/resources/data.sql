@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS USUARIO (
 	tipo_usuario int not null
 );
 
-
 CREATE TABLE IF NOT EXISTS CLIENTE(
     id          int primary key not null auto_increment,
     nome        varchar(255) null,

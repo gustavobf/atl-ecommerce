@@ -13,6 +13,13 @@ public class UsuarioDTO {
 		super();
 	}
 
+	public UsuarioDTO(String login, String senha, TipoUsuario tipoUsuario) {
+		super();
+		this.login = login;
+		this.senha = senha;
+		this.tipoUsuario = tipoUsuario;
+	}
+
 	public int getId() {
 		return id;
 	}

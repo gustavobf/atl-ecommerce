@@ -4,6 +4,8 @@ public class ClienteDTO {
 
 	private int id;
 	private String nome;
+	private String email;
+	private UsuarioDTO usuario;
 
 	public ClienteDTO() {
 		super();
@@ -23,6 +25,22 @@ public class ClienteDTO {
 
 	public void setNome(final String nome) {
 		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public UsuarioDTO getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
 	}
 
 }

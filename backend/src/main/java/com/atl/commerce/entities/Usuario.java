@@ -30,7 +30,7 @@ public class Usuario {
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
-		this.setTipoUsuario(tipoUsuario);
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	public String getLogin() {

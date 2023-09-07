@@ -17,4 +17,8 @@ public class ClienteService{
 		return repository.findByUsuario(usuario);
 	}
 
+	public Cliente novoCliente(Cliente cliente) {
+		return repository.save(cliente);
+	}
+
 }

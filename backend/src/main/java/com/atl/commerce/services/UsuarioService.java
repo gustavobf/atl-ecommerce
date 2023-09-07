@@ -16,8 +16,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public void novoUsuario(Usuario user) {
-		usuarioRepository.save(user);
+	public Usuario novoUsuario(Usuario user) {
+		return usuarioRepository.save(user);
 	}
 
 	public UsuarioDTO getUsuarioByLoginAndSenha(String login, String senha) throws RuntimeException {
@@ -33,14 +33,14 @@ public class UsuarioService {
 		return usuarioRepository.findById(id).get();
 	}
 
-	public void novoUsuarioCliente(UsuarioDTO dto) {
+	public Usuario novoUsuarioCliente(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.CLIENTE);
-		novoUsuario(dtoToUsuario(dto));
+		return novoUsuario(dtoToUsuario(dto));
 	}
 
-	public void novoUsuarioAdmin(UsuarioDTO dto) {
+	public Usuario novoUsuarioAdmin(UsuarioDTO dto) {
 		dto.setTipoUsuario(TipoUsuario.ADMIN);
-		novoUsuario(dtoToUsuario(dto));
+		return novoUsuario(dtoToUsuario(dto));
 	}
 
 	public UsuarioDTO usuarioToDto(final Usuario usuario) {
