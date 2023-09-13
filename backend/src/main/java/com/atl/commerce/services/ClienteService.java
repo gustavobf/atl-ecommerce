@@ -29,7 +29,12 @@ public class ClienteService {
 		return clienteToDTO(repository.save(dtoToCliente(dto)));
 	}
 
-	private ClienteDTO clienteToDTO(Cliente cliente) {
+	public int deletarPorId(int id) {
+		repository.deleteById(id);
+		return id;
+	}
+
+	ClienteDTO clienteToDTO(Cliente cliente) {
 		ClienteDTO clienteDTO = new ClienteDTO();
 		clienteDTO.setId(cliente.getId());
 		clienteDTO.setEmail(cliente.getEmail());
@@ -38,7 +43,7 @@ public class ClienteService {
 		return clienteDTO;
 	}
 
-	private Cliente dtoToCliente(ClienteDTO dto) {
+	Cliente dtoToCliente(ClienteDTO dto) {
 		Cliente cliente = new Cliente();
 		cliente.setId(dto.getId());
 		cliente.setEmail(dto.getEmail());

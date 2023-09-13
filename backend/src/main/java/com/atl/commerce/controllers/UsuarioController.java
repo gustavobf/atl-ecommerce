@@ -12,7 +12,6 @@ import com.atl.commerce.dtos.ClienteDTO;
 import com.atl.commerce.dtos.LoginDTO;
 import com.atl.commerce.dtos.UsuarioDTO;
 import com.atl.commerce.entities.Cliente;
-import com.atl.commerce.entities.Usuario;
 import com.atl.commerce.security.services.JwtGeneratorService;
 import com.atl.commerce.services.ClienteService;
 import com.atl.commerce.services.UsuarioService;
@@ -33,9 +32,10 @@ public class UsuarioController {
 	@PostMapping("/novo")
 	public ResponseEntity<?> novoUsuario(@RequestBody ClienteDTO dto) {
 		try {
-			UsuarioDTO novoUsuario = usuarioService.novoUsuarioCliente(new UsuarioDTO(dto.getUsuario().getLogin(),dto.getUsuario().getSenha(), dto.getUsuario().getTipoUsuario()));
-			Cliente clienteNovo = clienteService.novoCliente(
-					new Cliente(dto.getNome(), dto.getEmail(), usuarioService.dtoToUsuario(novoUsuario)));
+			UsuarioDTO novoUsuario = usuarioService.novoUsuarioCliente(new UsuarioDTO(dto.getUsuario().getLogin(),
+					dto.getUsuario().getSenha(), dto.getUsuario().getTipoUsuario()));
+			Cliente clienteNovo = clienteService
+					.novoCliente(new Cliente(dto.getNome(), dto.getEmail(), usuarioService.dtoToUsuario(novoUsuario)));
 			return new ResponseEntity<>(clienteNovo, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
