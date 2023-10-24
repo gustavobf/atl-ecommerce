@@ -9,12 +9,16 @@ import { AppComponent } from './app.component';
 import { ProdutosComponent } from './produtos/produtos/produtos.component';
 import { LoginComponent } from './login/login/login.component';
 import { TokenInterceptor } from './login/token.interceptor';
+import { CarrinhoComponent } from './carrinho/carrinho/carrinho.component';
+import { HistoricoPedidosComponent } from './historicoPedidos/historico-pedidos/historico-pedidos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProdutosComponent,
-    LoginComponent
+    LoginComponent,
+    CarrinhoComponent,
+    HistoricoPedidosComponent
   ],
   imports: [
     BrowserModule,

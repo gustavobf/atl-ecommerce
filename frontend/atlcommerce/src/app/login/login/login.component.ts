@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../service/login.service';
 import { Router } from '@angular/router';
+import { Usuario } from '../model/Usuario';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,10 @@ export class LoginComponent {
   constructor(private authService: LoginService, private router: Router) { }
 
   onSubmit() {
-    this.authService.login({ login: this.login, senha: this.senha }).subscribe(
+
+    const usuario = new Usuario(this.login, this.senha);
+
+    this.authService.login(usuario).subscribe(
       success => {
         if (success) {
           this.router.navigate(['/produtos']);
