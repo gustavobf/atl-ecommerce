@@ -21,6 +21,10 @@ public class JwtFilter extends GenericFilterBean {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+
 		if (!"OPTIONS".equals(request.getMethod())) {
 
 			String path = request.getRequestURI();

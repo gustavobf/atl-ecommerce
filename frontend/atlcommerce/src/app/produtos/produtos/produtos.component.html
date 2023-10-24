@@ -1,0 +1,25 @@
+<!-- <ul>
+  <li *ngFor="let produto of produtos">
+    <img [src]="produto.imagem" alt="{{produto.nome}}">
+    <h2>{{ produto.nome }}</h2>
+    <p>{{ produto.descricao }}</p>
+    <p><strong>Preço:</strong> {{ produto.preco }}</p>
+    <p><strong>Categoria:</strong> {{ produto.categoria.nome }}</p>
+  </li>
+</ul> -->
+
+<ul>
+  <li *ngFor="let produto of produtos">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{ produto.nome }}</h5>
+        <p class="card-text">{{ produto.descricao }}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </li>
+</ul>
+
+
+
+
