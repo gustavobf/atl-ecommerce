@@ -10,7 +10,7 @@ import { Pessoa } from '../model/Pessoa';
 })
 export class LoginService {
 
-  private _currentUser: Usuario | null = null;
+  private _currentUser!: Usuario;
 
   private apiUrlSignIn = API_ENDPOINT + '/api/usuario/login';
   private apiUrlSignUp = API_ENDPOINT + '/api/usuario/novo';
