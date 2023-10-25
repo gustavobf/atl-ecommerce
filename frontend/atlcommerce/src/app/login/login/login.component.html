@@ -1,5 +1,25 @@
-<form (ngSubmit)="onSubmit()">
-  <input [(ngModel)]="login" name="login" placeholder="login">
-  <input [(ngModel)]="senha" type="senha" name="senha" placeholder="senha">
-  <button type="submit">Login</button>
-</form>
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <div class="signup">
+      <form>
+        <label for="chk" aria-hidden="true">Sign up</label>
+        <input type="text" name="txt" placeholder="User name" required="">
+        <input type="email" name="email" placeholder="Email" required="">
+        <input type="password" name="pswd" placeholder="Password" required="">
+        <button>Sign up</button>
+      </form>
+    </div>
+
+    <div class="login">
+      <form (ngSubmit)="onSubmit()">
+        <label for="chk" aria-hidden="true">Login</label>
+        <input [(ngModel)]="login" name="login" type="text" placeholder="Usuário">
+        <input [(ngModel)]="senha" name="senha" type="password" placeholder="Senha">
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+</div>
