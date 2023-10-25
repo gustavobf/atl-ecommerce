@@ -3,20 +3,21 @@
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-      <form>
+      <form (ngSubmit)="onSubmitSignup()">
         <label for="chk" aria-hidden="true">Sign up</label>
-        <input type="text" name="txt" placeholder="User name" required="">
-        <input type="email" name="email" placeholder="Email" required="">
-        <input type="password" name="pswd" placeholder="Password" required="">
-        <button>Sign up</button>
+        <input [(ngModel)]="nomeSignup" type="text" name="nome" placeholder="Nome" required="">
+        <input [(ngModel)]="emailSignup" type="text" name="email" placeholder="Email" required="">
+        <input [(ngModel)]="loginSignup" type="email" name="login" placeholder="Login" required="">
+        <input [(ngModel)]="senhaSignup" type="password" name="senha" placeholder="Senha" required="">
+        <button type="submit">Sign up</button>
       </form>
     </div>
 
     <div class="login">
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmitSignin()">
         <label for="chk" aria-hidden="true">Login</label>
-        <input [(ngModel)]="login" name="login" type="text" placeholder="Usuário">
-        <input [(ngModel)]="senha" name="senha" type="password" placeholder="Senha">
+        <input [(ngModel)]="loginSignin" name="login" type="text" placeholder="Usuário">
+        <input [(ngModel)]="senhaSignin" name="senha" type="password" placeholder="Senha">
         <button type="submit">Entrar</button>
       </form>
     </div>
