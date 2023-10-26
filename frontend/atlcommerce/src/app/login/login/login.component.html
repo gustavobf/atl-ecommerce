@@ -5,10 +5,10 @@
     <div class="signup">
       <form (ngSubmit)="onSubmitSignup()">
         <label for="chk" aria-hidden="true">Sign up</label>
-        <input [(ngModel)]="nomeSignup" type="text" name="nome" placeholder="Nome" required="">
-        <input [(ngModel)]="emailSignup" type="text" name="email" placeholder="Email" required="">
-        <input [(ngModel)]="loginSignup" type="email" name="login" placeholder="Login" required="">
-        <input [(ngModel)]="senhaSignup" type="password" name="senha" placeholder="Senha" required="">
+        <input class="p-3" [(ngModel)]="nomeSignup" type="text" name="nome" placeholder="Nome" required="">
+        <input class="p-3" [(ngModel)]="emailSignup" type="text" name="email" placeholder="Email" required="">
+        <input class="p-3" [(ngModel)]="loginSignup" type="email" name="login" placeholder="Login" required="">
+        <input class="p-3" [(ngModel)]="senhaSignup" type="password" name="senha" placeholder="Senha" required="">
         <button type="submit">Sign up</button>
       </form>
     </div>
@@ -16,11 +16,21 @@
     <div class="login">
       <form (ngSubmit)="onSubmitSignin()">
         <label for="chk" aria-hidden="true">Login</label>
-        <input [(ngModel)]="loginSignin" name="login" type="text" placeholder="Usuário">
-        <input [(ngModel)]="senhaSignin" name="senha" type="password" placeholder="Senha">
+        <input class="p-3" [(ngModel)]="loginSignin" name="login" type="text" placeholder="Usuário">
+        <input class="p-3" [(ngModel)]="senhaSignin" name="senha" type="password" placeholder="Senha">
         <button type="submit">Entrar</button>
       </form>
     </div>
   </div>
+</div>
 
+<!-- Toast Failed-->
+<div #toastFailedLogin role="alert" aria-live="assertive" aria-atomic="true" class="toast bg-danger text-white fade" data-bs-autohide="true"
+  style="position: absolute; bottom: 0; right: 0;">
+  <div class="toast-header">
+    <strong class="me-auto">AtlCommerce</strong>
+  </div>
+  <div class="toast-body">
+    <p>Erro. Não foi possível se autenticar!</p>
+  </div>
 </div>

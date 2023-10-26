@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
-import { LoginService } from '../service/login.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../model/Usuario';
+import { Toast } from 'bootstrap';
 import { Pessoa } from '../model/Pessoa';
+import { Usuario } from '../model/Usuario';
+import { LoginService } from '../service/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  @ViewChild('toastFailedLogin', { static: true }) toastEl!: ElementRef<HTMLDivElement>;
+  toastFailedLogin: Toast | null = null;
 
   loginSignin!: string;
   senhaSignin!: string;
@@ -21,22 +25,21 @@ export class LoginComponent {
 
   constructor(private authService: LoginService, private router: Router) { }
 
-  onSubmitSignin() {
+  ngOnInit(): void {
+    this.toastFailedLogin = new Toast(this.toastEl.nativeElement, {});
+  }
 
+  onSubmitSignin() {
     const usuario = new Usuario(this.loginSignin, this.senhaSignin);
 
     this.authService.signIn(usuario).subscribe(
       success => {
         if (success) {
           this.router.navigate(['/produtos']);
-        } else {
-          // Lide com o erro ou informe ao usuário sobre a falha no login
         }
-      },
-      error => {
-        // Lide com o erro
-      }
-    );
+      }, error => {
+        this.showToastFailed();
+      });
 
   }
 
@@ -54,7 +57,10 @@ export class LoginComponent {
       error => {
       }
     );
+  }
 
+  showToastFailed() {
+    this.toastFailedLogin!.show();
   }
 
 }
