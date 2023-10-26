@@ -72,4 +72,8 @@ export class ProdutosComponent implements OnInit {
     this.router.navigate(['/carrinho']);
   }
 
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
 }
