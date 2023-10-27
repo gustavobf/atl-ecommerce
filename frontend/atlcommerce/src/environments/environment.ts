@@ -3,8 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  API_ENDPOINT_AMBIENTE_APP: process.env.API_ENDPOINT_AMBIENTE
+  production: false
 };
 
 /*
